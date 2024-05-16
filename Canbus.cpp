@@ -5,6 +5,8 @@
 #include <cstring>
 #include <unistd.h>
 
+#include "Event.h"
+
 Canbus::Canbus(char *i):interface(i) {
 
 }
@@ -47,22 +49,47 @@ int Canbus::sendMessage(__u32 id, __u8 size, __u8 data[8]) {
     return 0;
 }
 
-int Canbus::listen() {
-    int s, i;
+int Canbus::receive(Event *e) {
     int nbytes;
     struct can_frame frame;
 
     nbytes = read(s, &frame, sizeof(struct can_frame));
 
     if (nbytes < 0) {
-        std::cout<<"Failed to read from canbus socket"<<std::endl;
+        std::cout << "Failed to read from canbus socket" << std::endl;
         return -1;
     }
 
-    printf("0x%03X [%d] ",frame.can_id, frame.can_dlc);
+    switch (frame.can_id) {
+        case 2: //brandalarm
+            std::cout << "brandalarm: " << (int) frame.data[0] << std::endl;
+            break;
+        case 5: //temp
+            float temp;
+            memcpy(&temp, frame.data, 4);
+            std::cout << "temperatuur: " << temp << std::endl;
+            break;
+        case 6: //humidity
+            float humidity;
+            memcpy(&humidity, frame.data, 4);
+            std::cout << "luchtvochtigheid: " << humidity << std::endl;
+            e->setData(std::to_string(humidity));
+            e->setType(HUMIDITY);
+            return 1;
+        case 10: //noodknop-sluis
+            std::cout << "sluis noodknop ingedrukt" << std::endl;
+            break;
+        case 11: //binnen-sluis
+            std::cout << "sluis knop ingedrukt" << std::endl;
+            break;
+        default:
+            printf("0x%03X [%d] ", frame.can_id, frame.can_dlc);
 
-    for (i = 0; i < frame.can_dlc; i++)
-        printf("%02X ",frame.data[i]);
+            for (int i = 0; i < frame.can_dlc; i++)
+                printf("%02X ", frame.data[i]);
+
+            printf("\n");
+    }
 
     return 0;
 }
