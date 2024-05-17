@@ -5,7 +5,10 @@
 
 enum Type {
     NONE,
-    HUMIDITY
+    HUMIDITY,
+    BRAND,
+    SLUISKNOP,
+    NOODKNOP
 };
 
 class Event {

@@ -62,7 +62,11 @@ int Canbus::receive(Event *e) {
 
     switch (frame.can_id) {
         case 2: //brandalarm
-            std::cout << "brandalarm: " << (int) frame.data[0] << std::endl;
+            int brand;
+            brand = frame.data[0];
+            std::cout << "brandalarm: " << brand << std::endl;
+            e->setData(std::to_string(brand));
+            e->setType(BRAND);
             break;
         case 5: //temp
             float temp;
@@ -78,9 +82,13 @@ int Canbus::receive(Event *e) {
             return 1;
         case 10: //noodknop-sluis
             std::cout << "sluis noodknop ingedrukt" << std::endl;
+            e->setType(NOODKNOP);
+            e->setData(std::to_string(frame.data[0]));
             break;
         case 11: //binnen-sluis
             std::cout << "sluis knop ingedrukt" << std::endl;
+            e->setType(SLUISKNOP);
+            e->setData(std::to_string(frame.data[0]));
             break;
         default:
             printf("0x%03X [%d] ", frame.can_id, frame.can_dlc);

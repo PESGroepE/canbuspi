@@ -37,31 +37,17 @@ int main() {
         if (event->getType() == HUMIDITY) {
             socket.sendMessage("humidity:" + event->getData());
         }
-    }
+        if (event->getType() == BRAND) {
+            socket.sendMessage("brand:" + event->getData());
+        }
+        if (event->getType() == NOODKNOP) {
+            socket.sendMessage("noodknop:" + event->getData());
+        }
+        if (event->getType() == SLUISKNOP) {
+            socket.sendMessage("sluisknop:" + event->getData());
+        }
 
-    //uint8_t data[8] = {1};
-
-    /*
-    while (1) {
-        uint8_t data[8] = {0, 1};
-        uint8_t *p = data;
-        can.sendMessage(12, 2, p);
-        //can.sendMessage(2, 2, p);
-        sleep(1);
-        uint8_t data2[8] = {0, 0};
-        uint8_t *p2 = data2;
-        can.sendMessage(12, 2, p2);
-        sleep(1);
-        uint8_t data3[8] = {1, 0};
-        uint8_t *p3 = data3;
-        can.sendMessage(12, 2, p3);
-        sleep(1);
-        uint8_t data4[8] = {0, 0};
-        uint8_t *p4 = data4;
-        can.sendMessage(12, 2, p4);
-        sleep(1);
     }
-     */
 
     return 0;
 }
