@@ -1,3 +1,7 @@
+/**
+@file TCPSocket.cpp
+*/
+
 #include "TCPSocket.h"
 
 TCPSocket::TCPSocket(std::string h, int p, Canbus *c):host(h),port(p),can(c) {

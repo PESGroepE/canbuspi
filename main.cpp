@@ -1,10 +1,17 @@
+/**
+@file main.cpp
+*/
+
 #include <iostream>
 
 #include "Canbus.h"
 #include "TCPSocket.h"
-#include <unistd.h>
 #include <thread>
 
+/**
+ * @brief main functie van het programma.
+ * Functie die de canbus-verbinding en socket initialiseert en events afvangt.
+ */
 int main() {
     std::cout << "CANbus Pi application" << std::endl;
 

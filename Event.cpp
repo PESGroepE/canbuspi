@@ -1,3 +1,7 @@
+/**
+@file Event.cpp
+*/
+
 #include "Event.h"
 
 Event::Event():type(NONE),data() {}
