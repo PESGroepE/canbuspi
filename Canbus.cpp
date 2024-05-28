@@ -76,14 +76,16 @@ int Canbus::receive(Event *e) {
             float temp;
             memcpy(&temp, frame.data, 4);
             std::cout << "temperatuur: " << temp << std::endl;
+            e->setType(TEMP);
+            e->setData(std::to_string(temp));
             break;
         case 6: //humidity
             float humidity;
             memcpy(&humidity, frame.data, 4);
             std::cout << "luchtvochtigheid: " << humidity << std::endl;
-            e->setData(std::to_string(humidity));
             e->setType(HUMIDITY);
-            return 1;
+            e->setData(std::to_string(humidity));
+            break;
         case 10: //noodknop-sluis
             std::cout << "sluis noodknop ingedrukt" << std::endl;
             e->setType(NOODKNOP);

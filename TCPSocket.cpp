@@ -29,18 +29,35 @@ void TCPSocket::handle(std::string) {
         if (data.substr(0, d)=="deuren") {
             std::string body = data.substr(d+1, data.size());
             std::cout<<body<<std::endl;
-            if (body=="000") {
-                uint8_t candata[8] = {0, 0};
-                uint8_t *p = candata;
-                can->sendMessage(12, 2, p);
-            } else if (body=="100") {
-                uint8_t candata[8] = {1, 0};
-                uint8_t *p = candata;
-                can->sendMessage(12, 2, p);
-            } else if (body=="010") {
-                uint8_t candata[8] = {0, 1};
-                uint8_t *p = candata;
-                can->sendMessage(12, 2, p);
+
+            uint8_t sluisdeuren[8] = {0, 0};
+            const char *deuren = body.c_str();
+            if (deuren[0]=='1') {
+                sluisdeuren[0]=1;
+            }
+            if (deuren[1]=='1') {
+                sluisdeuren[1]=1;
+            }
+            uint8_t *ps = sluisdeuren;
+            can->sendMessage(12, 2, ps);
+
+            uint8_t trappenhuis[8] = {0};
+            if (deuren[2]=='1') {
+                trappenhuis[0]=1;
+            }
+            uint8_t *pt = trappenhuis;
+            can->sendMessage(13, 1, pt);
+        }
+        if (data.substr(0, d)=="brand") {
+            std::string body = data.substr(d+1, data.size());
+            std::cout<<body<<std::endl;
+
+            if (body=="1") {
+                uint8_t candata[8] = {1};
+                can->sendMessage(2, 1, candata);
+            } else {
+                uint8_t candata[8] = {0};
+                can->sendMessage(2, 1, candata);
             }
         }
     }

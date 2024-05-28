@@ -41,19 +41,23 @@ int main() {
         Event *event = new Event();
         can.receive(event);
 
-        if (event->getType() == HUMIDITY) {
-            socket.sendMessage("humidity:" + event->getData());
+        switch (event->getType()) {
+            case HUMIDITY:
+                socket.sendMessage("humidity:" + event->getData());
+                break;
+            case BRAND:
+                socket.sendMessage("brand:" + event->getData());
+                break;
+            case SLUISKNOP:
+                socket.sendMessage("sluisknop:" + event->getData());
+                break;
+            case NOODKNOP:
+                socket.sendMessage("noodknop:" + event->getData());
+                break;
+            case TEMP:
+                socket.sendMessage("temp:" + event->getData());
+                break;
         }
-        if (event->getType() == BRAND) {
-            socket.sendMessage("brand:" + event->getData());
-        }
-        if (event->getType() == NOODKNOP) {
-            socket.sendMessage("noodknop:" + event->getData());
-        }
-        if (event->getType() == SLUISKNOP) {
-            socket.sendMessage("sluisknop:" + event->getData());
-        }
-
     }
 
     return 0;

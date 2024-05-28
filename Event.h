@@ -11,7 +11,8 @@ enum Type {
     HUMIDITY,
     BRAND,
     SLUISKNOP,
-    NOODKNOP
+    NOODKNOP,
+    TEMP
 };
 
 /**
