@@ -96,6 +96,16 @@ int Canbus::receive(Event *e) {
             e->setType(SLUISKNOP);
             e->setData(std::to_string(frame.data[0]));
             break;
+        case 20: //motion sensor deur
+            std::cout << "beweging bij deur" << std::endl;
+            e->setType(BEWEGINGDEUR);
+            e->setData(std::to_string(frame.data[0]));
+            break;
+        case 21: //motion sensor lampen
+            std::cout << "beweging bij lampen" << std::endl;
+            e->setType(BEWEGINGLAMPEN);
+            e->setData(std::to_string(frame.data[0]));
+            break;
         default:
             printf("0x%03X [%d] ", frame.can_id, frame.can_dlc);
 

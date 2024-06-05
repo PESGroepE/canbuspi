@@ -12,7 +12,9 @@ enum Type {
     BRAND,
     SLUISKNOP,
     NOODKNOP,
-    TEMP
+    TEMP,
+    BEWEGINGDEUR,
+    BEWEGINGLAMPEN
 };
 
 /**

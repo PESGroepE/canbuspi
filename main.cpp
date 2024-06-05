@@ -57,6 +57,12 @@ int main() {
             case TEMP:
                 socket.sendMessage("temp:" + event->getData());
                 break;
+            case BEWEGINGLAMPEN:
+                socket.sendMessage("beweginglampen:" + event->getData());
+                break;
+            case BEWEGINGDEUR:
+                socket.sendMessage("bewegingdeur:" + event->getData());
+                break;
         }
     }
 
