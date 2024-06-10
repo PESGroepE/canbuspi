@@ -3,6 +3,8 @@
 */
 
 #include "TCPSocket.h"
+#include <thread>
+#include <chrono>
 
 TCPSocket::TCPSocket(std::string h, int p, Canbus *c):host(h),port(p),can(c) {
 
@@ -51,6 +53,8 @@ void TCPSocket::handle(std::string) {
         if (data.substr(0, d)=="brand") {
             std::string body = data.substr(d+1, data.size());
             std::cout<<body<<std::endl;
+
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
             if (body=="1") {
                 uint8_t candata[8] = {1};
